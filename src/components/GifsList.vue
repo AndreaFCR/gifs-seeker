@@ -1,10 +1,16 @@
 <template>
   <div>
-    <slot></slot>
+    <h3>
+      <slot>{{ title }}</slot>
+    </h3>
 
     <section class="gifs-wrapper">
       <div v-for="gif in gifs" :key="gif.id" class="gif-element">
-        <img :src="getImage(gif)" :alt="gif.title" />
+        <img
+          :src="getImage(gif)"
+          :alt="gif.title"
+          @click="selectItem(gif.id)"
+        />
         <p class="gif-title">{{ gif.title }}</p>
       </div>
     </section>
@@ -27,6 +33,9 @@ export default {
   methods: {
     getImage(item) {
       return item.images.original.url // use a method if you want to pass props, computed is not valid
+    },
+    selectItem(gifId) {
+      this.$emit('select-gif', gifId)
     },
   },
 }
